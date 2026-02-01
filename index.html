@@ -38,10 +38,9 @@
       const inatLayer = new FeatureLayer({
         url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
         // Filter for Castanea (chestnut) genus using taxon_id 49187
-        definitionExpression: "taxon_id = 49187 OR iconic_taxon_name = 'Plantae' AND scientific_name LIKE 'Castanea%'",
+        definitionExpression: "taxon_id = 49187",
         outFields: ["*"],
-        minScale: 0,
-        maxScale: 0,
+        visible: true,
         // Explicitly defining a bright renderer
         renderer: {
           type: "simple",
@@ -49,10 +48,10 @@
             type: "simple-marker",
             style: "circle",
             color: "orange",
-            size: "10px",
+            size: "12px",
             outline: {
               color: [255, 255, 255],
-              width: 1
+              width: 2
             }
           }
         },
@@ -269,15 +268,20 @@
       view.ui.add(searchWidget, {
         position: "top-right"
       });
-      //add legend to check
-      const legend = new Legend({
-        view: view,
-        layerInfos: [{
-          layer: inatLayer,
-          title: "Chestnut Observations"
-        }]
+      
+      // Wait for the view and layer to load before adding legend
+      view.when(() => {
+        inatLayer.when(() => {
+          const legend = new Legend({
+            view: view,
+            layerInfos: [{
+              layer: inatLayer,
+              title: "Chestnut Observations"
+            }]
+          });
+          view.ui.add(legend, "bottom-left");
+        });
       });
-      view.ui.add(legend, "bottom-left");
 
     });
   </script>
