@@ -37,8 +37,8 @@
       // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
       const inatLayer = new FeatureLayer({
         url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
-        // Filter for Castanea (chestnut) genus using taxon_id 49187
-        definitionExpression: "taxon_id = 49187",
+        // Filter for Castanea (chestnut) genus - using genus field instead
+        definitionExpression: "taxon_genus_name = 'Castanea'",
         outFields: ["*"],
         visible: true,
         // Explicitly defining a bright renderer
@@ -60,6 +60,14 @@
           content: "Scientific Name: {scientific_name}<br>Observed: {observed_on}"
         }
       });
+      
+      // Add error handling
+      inatLayer.load().then(() => {
+        console.log("iNaturalist layer loaded successfully");
+      }).catch((error) => {
+        console.error("Error loading iNaturalist layer:", error);
+      });
+      
       map.add(inatLayer);
 
       // adding in the graphics layer constructor
@@ -269,19 +277,11 @@
         position: "top-right"
       });
       
-      // Wait for the view and layer to load before adding legend
-      view.when(() => {
-        inatLayer.when(() => {
-          const legend = new Legend({
-            view: view,
-            layerInfos: [{
-              layer: inatLayer,
-              title: "Chestnut Observations"
-            }]
-          });
-          view.ui.add(legend, "bottom-left");
-        });
+      // Add legend - simpler approach
+      const legend = new Legend({
+        view: view
       });
+      view.ui.add(legend, "bottom-left");
 
     });
   </script>
