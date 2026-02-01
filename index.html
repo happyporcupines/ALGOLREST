@@ -26,7 +26,6 @@
       const map = new Map({
         basemap: "national-geographic"
       });
-
       // to avoid rendering issues on linux environments, raster maps are easier to use
       const view = new MapView({
         map: map,
@@ -34,9 +33,6 @@
         zoom: 11,
         container: "viewDiv"
       });
-      // adding in the graphics layer constructor
-      const graphicsLayer = new GraphicsLayer();
-      map.add(graphicsLayer);
       // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
       const inatLayer = new FeatureLayer({
         url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
@@ -55,6 +51,11 @@
         }
       });
       map.add(inatLayer);
+
+      // adding in the graphics layer constructor
+      const graphicsLayer = new GraphicsLayer();
+      map.add(graphicsLayer);
+
       // defining the geometry of the lemur point
       const lemurPoint = { //Create a point
         type: "point",
