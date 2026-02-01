@@ -23,7 +23,7 @@
       "esri/widgets/Legend"
     ], function(esriConfig, Map, MapView, BasemapGallery, Expand, Basemap, Locate, Search, Graphic, GraphicsLayer, FeatureLayer, Legend) {
 
-      esriConfig.apiKey = "AAAPTxy8BH1VEsoebNVZXo8HurP99AuF0u6hFXE5XsMHKuzBSGN5LvVSYilawxafx85hnye6aLKi3n6Zz6jpamVj3K_fKizzNd0T_PWfZuEpZ4aPF2jnf78BA6gmiKVMIqX_NDTPwEfczqPt8iU_gc7o7n0EcVXC-sbWEjGlqgpawvKA6ZvwFQjUMF6co6Pz09sxSZqKABYjxr9U5zVIt94EmOYh6ER2IgehHEihin99ZrjK0g-mFqXjG6qEc0blleJmzAT1_FDERp6GX";
+      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurP99AuF0u6hFXE5XsMHKuzBSGN5LvVSYilawxafx85hn9PCGXebaJHWlitVBT5zeCUaAyEvqj1BxcDK_zJC-tVX6YCERGHXEpZz6YEPcefm_vmXsNbePUUZ7JAXpHdXjsnh5x7OFNgUY22Xi2rwI6cYzTClvMoxyiN9hd4ig364gzmVxs5mLuQQYqSwxcO8eUnY8D8k0W9Tj3o-WFWbJGlMs42rjT9Cgf1AsZxwet7SYAT1_FDERp6GX";
       const map = new Map({
         basemap: "national-geographic"
       });
@@ -34,40 +34,34 @@
         zoom: 11,
         container: "viewDiv"
       });
-      // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
+      
+      // defining the style of the acorn symbol for chestnuts
+      const simpleAcornSymbol = {
+        type: "simple-marker",
+        style: "path",
+        path: "M-3,-8 Q-3,-10 0,-10 Q3,-10 3,-8 L3,-4 Q3,-2 1,0 Q1,4 0,6 Q-1,4 -1,0 Q-3,-2 -3,-4 Z M-4,-8 L4,-8 Q5,-9 4,-10 L-4,-10 Q-5,-9 -4,-8",
+        color: "orange",
+        size: "18px",
+        outline: {
+          color: [139, 69, 19],
+          width: 1
+        }
+      };
+      
+      // iNaturalist layer for chestnut observations
       const inatLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
-        // Filter for Castanea (chestnut) genus - using genus field instead
-        definitionExpression: "taxon_genus_name = 'Castanea'",
-        outFields: ["*"],
-        visible: true,
-        // Explicitly defining a bright renderer
+        url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/iNat_PreUC_View/FeatureServer/0",
+        definitionExpression: "scientific_name LIKE 'Castanea%'",
+        outFields: ["scientific_name", "common_name", "observed_on", "user_login", "url"],
         renderer: {
           type: "simple",
-          symbol: {
-            type: "simple-marker",
-            style: "circle",
-            color: "orange",
-            size: "12px",
-            outline: {
-              color: [255, 255, 255],
-              width: 2
-            }
-          }
+          symbol: simpleAcornSymbol
         },
         popupTemplate: {
           title: "{common_name}",
-          content: "Scientific Name: {scientific_name}<br>Observed: {observed_on}"
+          content: "Scientific Name: {scientific_name}<br>Observed: {observed_on}<br>Observer: {user_login}<br><a href='{url}' target='_blank'>View Observation on iNaturalist</a>"
         }
       });
-      
-      // Add error handling
-      inatLayer.load().then(() => {
-        console.log("iNaturalist layer loaded successfully");
-      }).catch((error) => {
-        console.error("Error loading iNaturalist layer:", error);
-      });
-      
       map.add(inatLayer);
 
       // adding in the graphics layer constructor
@@ -147,7 +141,8 @@
             [-78.6855941, 36.0170255]
           ]
         ]
-      };
+      });
+
       // defining the style of the heart point marker
       const simpleHeartSymbol = {
         type: "simple-marker",
@@ -277,7 +272,7 @@
         position: "top-right"
       });
       
-      // Add legend - simpler approach
+      // Add legend
       const legend = new Legend({
         view: view
       });
