@@ -30,21 +30,89 @@
       // to avoid rendering issues on linux environments, raster maps are easier to use
       const view = new MapView({
         map: map,
-        center: [-78.9002, 35.9956],
+        center: [-78.791728, 35.007705],
         zoom: 12,
         container: "viewDiv"
       });
       // adding in the graphics layer constructor
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
-      // defining the geometry of the point
-      const point = { //Create a point
+      // defining the geometry of the lemur point
+      const lemurPoint = { //Create a point
         type: "point",
         longitude: -78.961588,    //long lat of Duke Lemur Center
         latitude: 35.994457
       };
-      // defining the style of the point marker
-      const simpleMarkerSymbol = {
+      // defining the geometry of the falls lake point
+      const fallsLakePoint = { //Create a point
+        type: "point",
+        longitude: -78.69866,    //long lat of Falls Lake State Park
+        latitude: 36.02695
+      };
+      const explorePolygon = {
+        type: "polygon",
+        rings: [
+          [-79.0242738, 36.0223469],
+          [-78.9940381, 35.9601231],
+          [-78.9253207, 35.9278808],
+          [-78.827742, 35.9312168],
+          [-78.737035, 35.946783],
+          [-78.6641946, 35.9178719],
+          [-78.6215898, 35.9100863],
+          [-78.5501237, 35.9289928],
+          [-78.5446263, 35.9756836],
+          [-78.5569954, 36.0256789],
+          [-78.6518254, 36.062322],
+          [-78.7411581, 36.1000576],
+          [-78.8030037, 36.136666],
+          [-78.8607264, 36.1222465],
+          [-78.9665512, 36.095619],
+          [-79.0242738, 36.0223469] // Note: The last point matches the first to close the ring
+        ]
+      };
+      // defining the polyline (an option for exploring Durham from West to East
+      // defining the geometry of the trail polyline
+      const explorePath = {
+        type: "polyline",
+        paths: [
+          [
+            [-78.9613324, 35.9942126], [-78.9611975, 35.9941643], [-78.9611067, 35.9939657],
+            [-78.960514, 35.994096], [-78.9602341, 35.99424], [-78.9599102, 35.9947823],
+            [-78.9598478, 35.9951474], [-78.959625, 35.9954989], [-78.9595566, 35.9957593],
+            [-78.9596666, 35.9959677], [-78.9598344, 35.9961337], [-78.9599472, 35.9963237],
+            [-78.9599123, 35.996583], [-78.9597392, 35.9967935], [-78.9590223, 35.9976236],
+            [-78.9590706, 35.9976843], [-78.9600339, 35.9981062], [-78.9622678, 35.9989821],
+            [-78.9628994, 35.9992062], [-78.9634739, 35.9993407], [-78.9638873, 35.9993841],
+            [-78.9640322, 35.9994232], [-78.9620264, 36.0007701], [-78.9603575, 35.9993789],
+            [-78.9581886, 35.9986759], [-78.9582376, 36.0030995], [-78.9569706, 36.0074564],
+            [-78.9553104, 36.0115498], [-78.9522181, 36.0151947], [-78.9512885, 36.0155385],
+            [-78.95, 36.0151741], [-78.9480888, 36.0156947], [-78.9464139, 36.015903],
+            [-78.944653, 36.0156427], [-78.9406016, 36.0147666], [-78.9367363, 36.0134301],
+            [-78.9364142, 36.0133607], [-78.9360706, 36.0146972], [-78.9360276, 36.015565],
+            [-78.9354444, 36.0154057], [-78.9340916, 36.0149197], [-78.9323736, 36.0135659],
+            [-78.9306772, 36.0122294], [-78.9286801, 36.0106499], [-78.9261032, 36.0104763],
+            [-78.9239752, 36.0104537], [-78.9233095, 36.010419], [-78.9220855, 36.0099677],
+            [-78.922143, 36.0065135], [-78.9214909, 36.006377], [-78.91973, 36.005943],
+            [-78.9164015, 36.0042593], [-78.9133418, 36.0026294], [-78.9112374, 36.0013448],
+            [-78.9053454, 35.9976603], [-78.9047265, 35.9979962], [-78.9039749, 35.998083],
+            [-78.8994868, 35.998031], [-78.8983951, 35.9975561], [-78.8974503, 35.9954382],
+            [-78.8962477, 35.9952993], [-78.8934561, 35.9944313], [-78.8851241, 35.9943965],
+            [-78.8763761, 35.9944399], [-78.8606886, 35.9909243], [-78.8275324, 35.9828681],
+            [-78.8131846, 35.9796136], [-78.7959913, 35.9770644], [-78.7865156, 35.9757371],
+            [-78.7629049, 35.9789835], [-78.743512, 35.9817839], [-78.7323143, 35.9795871],
+            [-78.7300398, 35.9795342], [-78.7227386, 35.9811664], [-78.7172845, 35.9827901],
+            [-78.7092637, 35.9839206], [-78.7017478, 35.9872195], [-78.6978718, 35.988857],
+            [-78.6966263, 35.9889959], [-78.6921167, 35.988475], [-78.6882513, 35.9877805],
+            [-78.685202, 35.9917391], [-78.6852426, 36.0002584], [-78.6866599, 36.0062993],
+            [-78.688101, 36.0097719], [-78.6888854, 36.011672], [-78.6880586, 36.0119498],
+            [-78.6875003, 36.0123837], [-78.6872748, 36.012887], [-78.6871245, 36.0149004],
+            [-78.6868826, 36.0154114], [-78.6861847, 36.0161664], [-78.6857982, 36.016661],
+            [-78.6855941, 36.0170255]
+          ]
+        ]
+      };
+      // defining the style of the heart point marker
+      const simpleHeartSymbol = {
         type: "simple-marker",
         style: "path",
         path: "M0,-6 C2,-10 6,-10 6,-6 C6,-2 2,2 0,6 C-2,2 -6,-2 -6,-6 C-6,-10 -2,-10 0,-6",
@@ -55,24 +123,78 @@
           width: 1
         }
       };
+      // defining the style of the tree point marker
+      const simpleTreeSymbol = {
+        type: "simple-marker",
+        style: "path",
+        path: "M0,-8 L-5,0 L-2,0 L-6,6 L6,6 L2,0 L5,0 Z M-1,6 L-1,8 L1,8 L1,6 Z",
+        color: "#2D5A27", // A deep forest green
+        size: "20px",
+        outline: {
+          color: [255, 255, 255],// slight white outline
+          width: 1
+        }
+      };
+      // adding transparent fill to the polygon
+      const greenPolygon = {
+        type: "simple-fill",
+        color: [45, 90, 39, 0.4], // Forest green with 40% opacity
+        outline: {
+          color: [255, 255, 255],
+          width: 1
+        }
+      };
+      // polyline graphical attributes
+      const pathSymbol = {
+        type: "simple-line",
+        color: [139, 69, 19], // Saddle Brown
+        width: "2px",
+        style: "short-dot"
+      };
       // defining popup properties
-      const popupTemplate = {
+      const popup = {
         title: "{Name}",
         content: "{Description}"
-      }
-      const attributes = {
+      };
+      const lemurAttributes = {
         Name: "Duke Lemur Center",
         Description: "Founded in 1966 on the campus of Duke University in Durham, NC, the Duke Lemur Center is a world leader in the study, care, and protection of lemurs—Earth’s most threatened group of mammals."
-      }
-      //creating the point
-      const pointGraphic = new Graphic({
-        geometry: point,
-        symbol: simpleMarkerSymbol,
-        attributes: attributes,
-        popupTemplate: popupTemplate
+      };
+      const fallsLakeAttributes = {
+        Name: "Falls Lake State Park",
+        Description: "Scenic destination for picnicking, hiking & mountain biking, plus beaches, swimming & boat launches. Dogs allowed!"
+      };
+      //creating the lemur point
+      const lemurPointGraphic = new Graphic({
+        geometry: lemurPoint,
+        symbol: simpleHeartSymbol,
+        attributes: lemurAttributes,
+        popupTemplate: popup
       });
-      // adding the point to the graphics layer
-      graphicsLayer.add(pointGraphic);
+      // creating the Falls Lake point
+      const fallsLakePointGraphic = new Graphic({
+        geometry: fallsLakePoint,
+        symbol: simpleHeartSymbol,
+        attributes: fallsLakeAttributes,
+        popupTemplate: popup
+      });
+      // creating the polygon graphic
+      const exploreRegionGraphic = new Graphic({
+        geometry: explorePolygon,
+        symbol: greenPolygon
+      })
+      // creating the polyline graphic
+      const pathGraphic = new Graphic({
+        geometry: explorePath,
+        symbol: pathSymbol
+      });
+      // adding the points to the graphics layer
+      graphicsLayer.add(lemurPointGraphic);
+      graphicsLayer.add(fallsLakePointGraphic);
+      graphicsLayer.add(exploreRegionGraphic);
+      graphicsLayer.add(pathGraphic);
+      // defining the geometry of the polygon of the area I want to explore in depth first
+
       //adding in a widget that draws from a few specific raster types
       const basemapGallery = new BasemapGallery({
         view: view,
