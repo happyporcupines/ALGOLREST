@@ -18,8 +18,9 @@
       "esri/widgets/Locate",
       "esri/widgets/Search",
       "esri/Graphic",
-      "esri/layers/GraphicsLayer"
-    ], function(esriConfig, Map, MapView, BasemapGallery, Expand, Basemap, Locate, Search, Graphic, GraphicsLayer) {
+      "esri/layers/GraphicsLayer",
+      "esri/layers/FeatureLayer"
+    ], function(esriConfig, Map, MapView, BasemapGallery, Expand, Basemap, Locate, Search, Graphic, GraphicsLayer, FeatureLayer) {
 
       esriConfig.apiKey = "AAAPTxy8BH1VEsoebNVZXo8HurP99AuF0u6hFXE5XsMHKuzBSGN5LvVSYilawxafx85hnjGKQIucDXRL6XFw-7thGF-uk0aVFzmTfpZIdLPlDptV3DwRJMoTI46gFfAZg91heVrVKDrPxtZ2kprYUaxsosQ7mAA3INNtJE36tp9pvCkN14AMLWxssJRq3J2UEOC32gjoMtV1KsLPKUKhISAWDnt1hHRkirKuliAFLg79e5lEq1xlI52nLi3GiWhJ6EuceAT1_FDERp6GXAPTxy8BH1VEsoebNVZXo8HurP99AuF0u6hFXE5XsMHKuzBSGN5LvVSYilawxafx85hnye6aLKi3n6Zz6jpamVj3K_fKizzNd0T_PWfZuEpZ4aPF2jnf78BA6gmiKVMIqX_NDTPwEfczqPt8iU_gc7o7n0EcVXC-sbWEjGlqgpawvKA6ZvwFQjUMF6co6Pz09sxSZqKABYjxr9U5zVIt94EmOYh6ER2IgehHEihin99ZrjK0g-mFqXjG6qEc0blleJmzAT1_FDERp6GX";
 
@@ -30,13 +31,31 @@
       // to avoid rendering issues on linux environments, raster maps are easier to use
       const view = new MapView({
         map: map,
-        center: [-78.783134, 36.018037],
+        center: [-78.831601, 36.016876],
         zoom: 11,
         container: "viewDiv"
       });
       // adding in the graphics layer constructor
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
+      // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
+      const inatLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
+        // Filtering for genus and the last 3 years (assuming 2026 current date)
+        definitionExpression: "(scientific_name LIKE 'Castanea %' OR scientific_name = 'Castanea') AND observed_on >= DATE '2023-01-01'",
+        outFields: ["*"],
+        popupTemplate: {
+          title: "Recent {common_name} Discovery",
+          content: `
+      <ul>
+        <li><b>Scientific Name:</b> {scientific_name}</li>
+        <li><b>Date Observed:</b> {observed_on_date}</li>
+        <li><b>Quality Grade:</b> {quality_grade}</li>
+      </ul>
+    `
+        }
+      });
+      map.add(inatLayer);
       // defining the geometry of the lemur point
       const lemurPoint = { //Create a point
         type: "point",
@@ -138,7 +157,7 @@
       // adding transparent fill to the polygon
       const greenPolygon = {
         type: "simple-fill",
-        color: [45, 90, 39, 0.4], // Forest green with 40% opacity
+        color: [45, 90, 39, 0.2], // Forest green with 20% opacity
         outline: {
           color: [255, 255, 255],
           width: 1
@@ -188,6 +207,7 @@
         geometry: explorePath,
         symbol: pathSymbol
       });
+
       // adding the points to the graphics layer
       graphicsLayer.add(lemurPointGraphic);
       graphicsLayer.add(fallsLakePointGraphic);
