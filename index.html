@@ -40,15 +40,18 @@
       // defining the geometry of the point
       const point = { //Create a point
         type: "point",
-        longitude: -78.96750,    //long lat of Duke Lemur Center
-        latitude: 35.994511
+        longitude: -78.961588,    //long lat of Duke Lemur Center
+        latitude: 35.994457
       };
       // defining the style of the point marker
       const simpleMarkerSymbol = {
         type: "simple-marker",
-        color: [0, 0, 139],  // Color of blues rock
+        style: "path",
+        path: "M0,-6 C2,-10 6,-10 6,-6 C6,-2 2,2 0,6 C-2,2 -6,-2 -6,-6 C-6,-10 -2,-10 0,-6",
+        color: "magenta",  // makes the heart pinkish
+        size: "18px",
         outline: {
-          color: [255, 255, 255], // White
+          color: [255, 255, 255], // slight white outline
           width: 1
         }
       };
