@@ -34,17 +34,14 @@
         container: "viewDiv"
       });
       // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
-      const inatLayer = new FeatureLayer({
-        // Using a direct, absolute URL
-        url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/ArcGIS/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
-        // We'll simplify the filter to just the genus first to ensure it loads
-        definitionExpression: "scientific_name LIKE 'Castanea%'",
-        outFields: ["scientific_name", "common_name", "observed_on_date", "quality_grade"],
-        popupTemplate: {
-          title: "iNaturalist: {scientific_name}",
-          content: "Found on: {observed_on_date}"
-        }
-      });
+        const inatLayer = new FeatureLayer({
+          // Direct, lowercase REST endpoint
+          url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
+          outFields: ["scientific_name"], 
+          // Commenting this out for 1 commit to see if points appear globally
+          // definitionExpression: "scientific_name LIKE 'Castanea%'"
+        });
+      map.add(inatLayer);
       map.add(inatLayer);
 
       // adding in the graphics layer constructor
