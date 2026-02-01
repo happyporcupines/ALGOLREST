@@ -36,18 +36,11 @@
       // This layer uses a REST URL to fetch Dynamic Content from the Living Atlas
       const inatLayer = new FeatureLayer({
         url: "https://services.arcgis.com/P3ePLMYs2RVChqBA/arcgis/rest/services/iNaturalist_Observations_Public/FeatureServer/0",
-        // Filtering for genus and the last 3 years (assuming 2026 current date)
         definitionExpression: "(scientific_name LIKE 'Castanea %' OR scientific_name = 'Castanea') AND observed_on >= DATE '2023-01-01'",
         outFields: ["*"],
         popupTemplate: {
           title: "Recent {common_name} Discovery",
-          content: `
-      <ul>
-        <li><b>Scientific Name:</b> {scientific_name}</li>
-        <li><b>Date Observed:</b> {observed_on_date}</li>
-        <li><b>Quality Grade:</b> {quality_grade}</li>
-      </ul>
-    `
+          content: "<b>Scientific Name:</b> {scientific_name}<br><b>Date:</b> {observed_on_date}<br><b>Quality:</b> {quality_grade}"
         }
       });
       map.add(inatLayer);
