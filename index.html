@@ -19,9 +19,8 @@
       "esri/widgets/Search",
       "esri/Graphic",
       "esri/layers/GraphicsLayer",
-      "esri/layers/FeatureLayer",
-      "esri/widgets/Legend"
-    ], function(esriConfig, Map, MapView, BasemapGallery, Expand, Basemap, Locate, Search, Graphic, GraphicsLayer, FeatureLayer, Legend) {
+      "esri/layers/FeatureLayer"
+    ], function(esriConfig, Map, MapView, BasemapGallery, Expand, Basemap, Locate, Search, Graphic, GraphicsLayer, FeatureLayer) {
 
       esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurP99AuF0u6hFXE5XsMHKuzBSGN5LvVSYilawxafx85hn9PCGXebaJHWlitVBT5zeCUaAyEvqj1BxcDK_zJC-tVX6YCERGHXEpZz6YEPcefm_vmXsNbePUUZ7JAXpHdXjsnh5x7OFNgUY22Xi2rwI6cYzTClvMoxyiN9hd4ig364gzmVxs5mLuQQYqSwxcO8eUnY8D8k0W9Tj3o-WFWbJGlMs42rjT9Cgf1AsZxwet7SYAT1_FDERp6GX";
       const map = new Map({
@@ -68,7 +67,7 @@
         "type": "simple",
         "symbol": {
           "type": "picture-marker",
-          "url": "https://happyporcupines.github.io/ALGOL/outline_local_airport_black_24dp.png",
+          "url": "https://happyporcupines.github.io/ALGOL/local_airport_24dp_1F1F1F.png",
           "width": "18px",
           "height": "18px"
         }
@@ -287,12 +286,6 @@
       view.ui.add(searchWidget, {
         position: "top-right"
       });
-      
-      // Add legend
-      const legend = new Legend({
-        view: view
-      });
-      view.ui.add(legend, "bottom-left");
 
     });
   </script>
