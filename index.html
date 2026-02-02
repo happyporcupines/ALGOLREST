@@ -62,17 +62,19 @@
         }
       });
       map.add(inatLayer);
+      
       // airport icon
       const airportRenderer = {
-        "type": "simple",
-        "symbol": {
-          "type": "picture-marker",
-          "url": "https://happyporcupines.github.io/ALGOL/local_airport_24dp_1F1F1F.png",
-          "width": "18px",
-          "height": "18px"
+        type: "simple",
+        symbol: {
+          type: "picture-marker",
+          url: "https://raw.githubusercontent.com/happyporcupines/AGOL/main/local_airport_24dp_1F1F1F.png",
+          width: "18px",
+          height: "18px"
         }
-      }
-      //personally hosted airport feature layer
+      };
+      
+      // personally hosted airport feature layer
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer
