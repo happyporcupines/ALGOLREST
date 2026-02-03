@@ -126,7 +126,6 @@
       //adding the const for the feature layer
       const myAirports = new FeatureLayer({
         title: "Airports",
-        legendEnabled: false, // Hide this layer from the legend
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
@@ -191,7 +190,7 @@
         definitionExpression: "Fac_Type = 'HELIPORT'",
         labelingInfo: [heliportLabels]
       });
-      map.add(heliportLayer);
+      // Removed: map.add(heliportLayer); - Only myAirports will be added for editing
 
       // adding in the graphics layer constructor
       const graphicsLayer = new GraphicsLayer();
