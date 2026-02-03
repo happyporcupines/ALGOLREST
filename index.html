@@ -120,7 +120,8 @@
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
-        labelingInfo: [airportLabels]
+        labelingInfo: [airportLabels],
+        editable: false
       });
       map.add(airportLayer);
       //adding the const for the feature layer
@@ -186,7 +187,8 @@
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: heliportRenderer,
         definitionExpression: "Fac_Type = 'HELIPORT'",
-        labelingInfo: [heliportLabels]
+        labelingInfo: [heliportLabels],
+        editable: false
       });
       map.add(heliportLayer);
 
