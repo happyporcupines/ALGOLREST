@@ -51,6 +51,7 @@
       
       // iNaturalist layer for chestnut observations
       const inatLayer = new FeatureLayer({
+        title: "Chestnut Observations", // Add your custom legend title here
         url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/iNat_PreUC_View/FeatureServer/0",
         definitionExpression: "scientific_name LIKE 'Castanea%'",
         outFields: ["scientific_name", "common_name", "observed_on", "user_login", "url"],
@@ -115,6 +116,7 @@
       
       // personally hosted airport feature layer
       const airportLayer = new FeatureLayer({
+        title: "Airports", // Add your custom legend title here
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
@@ -123,6 +125,8 @@
       map.add(airportLayer);
       //adding the const for the feature layer
       const myAirports = new FeatureLayer({
+        title: "Airports",
+        legendEnabled: false, // Hide this layer from the legend
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
@@ -134,7 +138,8 @@
       map.add(myAirports);
       // Set the point layer's LayerInfo
       const pointInfos = {
-      layer: myAirports
+        layer: myAirports,
+        allowedWorkflows: ["create"]
       }
 
       // Begin Editor constructor
@@ -177,6 +182,7 @@
       
       // heliport feature layer
       const heliportLayer = new FeatureLayer({
+        title: "Heliports",
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: heliportRenderer,
         definitionExpression: "Fac_Type = 'HELIPORT'",
