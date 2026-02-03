@@ -122,7 +122,7 @@
         definitionExpression: "Fac_Type = 'AIRPORT'",
         labelingInfo: [airportLabels]
       });
-      map.add(airportLayer);
+      // Removed: map.add(airportLayer); - Only myAirports will be added for editing
       //adding the const for the feature layer
       const myAirports = new FeatureLayer({
         title: "Airports",
