@@ -120,8 +120,7 @@
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
-        labelingInfo: [airportLabels],
-        editable: false
+        labelingInfo: [airportLabels]
       });
       map.add(airportLayer);
       //adding the const for the feature layer
@@ -145,8 +144,11 @@
 
       // Begin Editor constructor
       const editor = new Editor({
-      view: view,
-      layerInfos: [pointInfos]
+        view: view,
+        layerInfos: [pointInfos],
+        supportingWidgetDefaults: {
+          featureFormButton: false
+        }
       }); // End Editor constructor
 
       // Add the widget to the view
@@ -187,8 +189,7 @@
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: heliportRenderer,
         definitionExpression: "Fac_Type = 'HELIPORT'",
-        labelingInfo: [heliportLabels],
-        editable: false
+        labelingInfo: [heliportLabels]
       });
       map.add(heliportLayer);
 
