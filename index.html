@@ -113,31 +113,24 @@
           expression: "$feature.Airport_Code"
         }
       };
-      
-      // personally hosted airport feature layer
+      // personally hosted airport feature layer with display and editing capabilities
       const airportLayer = new FeatureLayer({
         title: "Airports", // Add your custom legend title here
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
         renderer: airportRenderer,
         definitionExpression: "Fac_Type = 'AIRPORT'",
-        labelingInfo: [airportLabels]
-      });
-      // Removed: map.add(airportLayer); - Only myAirports will be added for editing
-      //adding the const for the feature layer
-      const myAirports = new FeatureLayer({
-        title: "Airports",
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/bf_lab2_576/FeatureServer/0",
-        renderer: airportRenderer,
-        definitionExpression: "Fac_Type = 'AIRPORT'",
-        labelingInfo: [airportCode],
-        //adding the popup here
+        labelingInfo: [airportLabels],
         outFields: ["Airport_Code"],
+        popupTemplate: {
+          title: "{Fac_Name}",
+          content: "Airport Code: {Airport_Code}"
+        }
       });
-      //adding the feature layer to the map
-      map.add(myAirports);
-      // Set the point layer's LayerInfo
+      map.add(airportLayer);
+      
+      // Set the point layer's LayerInfo for Editor
       const pointInfos = {
-        layer: myAirports,
+        layer: airportLayer,
         allowedWorkflows: ["create"]
       }
 
